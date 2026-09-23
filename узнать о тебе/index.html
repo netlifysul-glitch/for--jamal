@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Опрос</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: sans-serif; background: #fff5f8; display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
+        .container { width: 100%; max-width: 460px; background: #fff; padding: 25px; border-radius: 20px; box-shadow: 0 10px 25px rgba(214, 51, 132, 0.1); border: 1px solid #ffe3ed; }
+        h1 { color: #d63384; font-size: 21px; text-align: center; margin-bottom: 15px; }
+        label { font-weight: 600; font-size: 16px; display: block; margin-bottom: 12px; color: #333; }
+        .step { display: none; }
+        .step.active { display: block !important; }
+        .option-card { background: #fdf8fa; border: 2px solid #f0e2e7; padding: 12px; border-radius: 12px; margin-bottom: 8px; cursor: pointer; display: flex; align-items: center; }
+        .option-card input { margin-right: 10px; accent-color: #d63384; }
+        input, select { width: 100%; padding: 12px; margin-top: 8px; border: 2px solid #f0e2e7; border-radius: 10px; outline: none; }
+        .btn-group { display: flex; gap: 10px; margin-top: 20px; }
+        button { flex: 1; background: #d63384; color: #fff; border: none; padding: 12px; border-radius: 10px; font-size: 16px; cursor: pointer; font-weight: 700; }
+        button.prev-btn { background: #f0e2e7; color: #666; max-width: 80px; }
+        .answer-block { background: #fdf8fa; padding: 12px; border-radius: 10px; margin-top: 15px; border-left: 4px solid #d63384; font-size: 14px; text-align: left; color: #333; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="step-0" class="step active">
+        <h1>привет Жамал) кароче тут пара вопросов ответь пжпж ❤️</h1>
+        <div class="btn-group"><button onclick="go(1)">нажать сюда</button></div>
+    </div>
+    
+    <div id="step-1" class="step">
+        <label>1. как дела вообще твои?</label>
+        <div class="option-card" onclick="sel(this,'q1_1')"><input type="radio" id="q1_1" name="q1" value="все четко" checked> все четко</div>
+        <div class="option-card" onclick="sel(this,'q1_2')"><input type="radio" id="q1_2" name="q1" value="устала капец"> устала капец</div>
+        <input type="text" id="q1_t" placeholder="или напиши сама...">
+        <div class="btn-group"><button onclick="go(2)">далее</button></div>
+    </div>
+    
+    <div id="step-2" class="step">
+        <label>2. че щас делаешь?</label>
+        <div class="option-card" onclick="sel(this,'q2_1')"><input type="radio" id="q2_1" name="q2" value="отдыхаю" checked> отдыхаю</div>
+        <div class="option-card" onclick="sel(this,'q2_2')"><input type="radio" id="q2_2" name="q2" value="учусь / делаю домашку"> учусь / делаю домашку</div>
+        <input type="text" id="q2_t" placeholder="или распиши...">
+        <div class="btn-group"><button class="prev-btn" onclick="go(1)">назад</button><button onclick="go(3)">далее</button></div>
+    </div>
+    
+    <div id="step-3" class="step">
+        <label>3. как там учеба? нормально все?</label>
+        <div class="option-card" onclick="sel(this,'q3_1')"><input type="radio" id="q3_1" name="q3" value="да все отлично" checked> да все отлично</div>
+        <div class="option-card" onclick="sel(this,'q3_2')"><input type="radio" id="q3_2" name="q3" value="сложно капец"> сложно капец</div>
+        <input type="text" id="q3_t" placeholder="какой предмет бесит больше всего?">
+        <div class="btn-group"><button class="prev-btn" onclick="go(2)">назад</button><button onclick="go(4)">далее</button></div>
+    </div>
+    
+    <div id="step-4" class="step">
+        <label>4. сильно выматываешься на занятиях?</label>
+        <div class="option-card" onclick="sel(this,'q4_1')"><input type="radio" id="q4_1" name="q4" value="да сил ваще нет" checked> да сил ваще нет</div>
+        <div class="option-card" onclick="sel(this,'q4_2')"><input type="radio" id="q4_2" name="q4" value="не нормально все"> не нормально все</div>
+        <div class="btn-group"><button class="prev-btn" onclick="go(3)">назад</button><button onclick="go(5)">далее</button></div>
+    </div>
+    
+    <div id="step-5" class="step">
+        <label>5. пойдешь гулять на днях?</label>
+        <select id="q5_s">
+            <option value="да пойду конечно 🎉">да пойду конечно 🎉</option>
+            <option value="надо подумать 🤔">надо подумать 🤔</option>
+            <option value="не, не пойду сорян ❌">не, не пойду сорян ❌</option>
+        </select>
+        <div class="btn-group"><button class="prev-btn" onclick="go(4)">назад</button><button onclick="check()">далее</button></div>
+    </div>
+    
+    <div id="step-6" class="step">
+        <label>6. когда свободна будешь тогда?</label>
+        <input type="date" id="q6_d">
+        <input type="text" id="q6_t" placeholder="напиши время примерное во сколько удобно">
+        <div class="btn-group"><button class="prev-btn" onclick="go(5)">назад</button><button onclick="send(false)">отправить</button></div>
+    </div>
+    
+    <div id="step-7" class="step">
+        <h1 onclick="toggleSecret()" style="cursor: pointer;">все от души) ответы ко мне пошли, я напишу тебе тогда скоро! ❤️</h1>
+        <div id="hidden-results" style="display: none; margin-top: 20px; border-top: 1px dashed #ffe3ed; padding-top: 10px;">
+            <div id="out"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function go(s) {
+        document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+        document.getElementById(`step-${s}`).classList.add('active');
+    }
+    function sel(el, id) {
+        document.getElementById(id).checked = true;
+    }
+    function check() {
+        if(document.getElementById('q5_s').value === "не, не пойду сорян ❌") { send(true); } else { go(6); }
+    }
+    function toggleSecret() {
+        let box = document.getElementById('hidden-results');
+        box.style.display = box.style.display === 'none' ? 'block' : 'none';
+    }
+    function send(skp = false) {
+        let q1 = document.getElementById('q1_t').value || document.querySelector('input[name="q1"]:checked').value;
+        let q2 = document.getElementById('q2_t').value || document.querySelector('input[name="q2"]:checked').value;
+        let q3 = document.getElementById('q3_t').value || document.querySelector('input[name="q3"]:checked').value;
+        let q4 = document.querySelector('input[name="q4"]:checked').value;
+        let q5 = document.getElementById('q5_s').value;
+        let d = skp ? "отказалась" : (document.getElementById('q6_d').value || "не выбрала");
+        let t = skp ? "—" : (document.getElementById('q6_t').value || "не указано");
+
+        let current = JSON.parse(localStorage.getItem('ans_list')) || [];
+        current.push({ dt: new Date().toLocaleString('ru-RU'), q1:q1, q2:q2, q3:q3, q4:q4, q5:q5, d:d, t:t });
+        localStorage.setItem('ans_list', JSON.stringify(current));
+        
+        let html = '';
+        current.reverse().forEach(ans => {
+            html += `<div class="answer-block"><b>дата:</b> ${ans.dt}<br><b>дела:</b> ${ans.q1}<br><b>че делает:</b> ${ans.q2}<br><b>учеба:</b> ${ans.q3}<br><b>устает:</b> ${ans.q4}<br><b>гулять:</b> ${ans.q5}<br><b>когда:</b> ${ans.d} в ${ans.t}</div>`;
+        });
+        document.getElementById('out').innerHTML = html;
+        go(7);
+    }
+</script>
+</body>
+</html>
